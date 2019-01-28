@@ -15,9 +15,11 @@ export class MessageComponent {
   }
 
   constructor(private messageService: MessageService,
-              private router: Router) { }
+              private router: Router,
+              private msgService: MessageService) { }
 
   close(): void {
-    // Close the popup.
+    this.router.navigate([{ outlets: { popup: null }}]);
+    this.msgService.isDisplayed = false;
   }
 }
