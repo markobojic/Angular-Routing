@@ -1,3 +1,4 @@
+import { SelectiveStrategy } from './selective-strategy.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
@@ -12,7 +13,6 @@ import { WelcomeComponent } from './home/welcome.component';
 import { PageNotFoundComponent } from './page-not-found.component';
 
 /* Feature Modules */
-import { ProductModule } from './products/product.module';
 import { UserModule } from './user/user.module';
 import { MessageModule } from './messages/message.module';
 import { AppRoutingModule } from './app-routing';
@@ -23,7 +23,6 @@ import { AppRoutingModule } from './app-routing';
     BrowserAnimationsModule,
     HttpClientModule,
     InMemoryWebApiModule.forRoot(ProductData, { delay: 1000 }),
-    ProductModule,
     UserModule,
     MessageModule,
     AppRoutingModule
@@ -32,6 +31,9 @@ import { AppRoutingModule } from './app-routing';
     AppComponent,
     WelcomeComponent,
     PageNotFoundComponent
+  ],
+  providers: [
+    SelectiveStrategy
   ],
   bootstrap: [AppComponent]
 })

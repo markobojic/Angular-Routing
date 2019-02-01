@@ -1,7 +1,6 @@
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 
-import { AuthGuard } from './../user/auth.guard';
 import { ProductEditGuard } from './product-edit/product-edit.guard';
 import { ProductListComponent } from './product-list.component';
 import { ProductDetailComponent } from './product-detail.component';
@@ -12,39 +11,33 @@ import { ProductEditTagsComponent } from './product-edit/product-edit-tags.compo
 
 const ROUTES = [
   {
-    path: 'products',
-    canActivate: [AuthGuard],
+    path: '',
+    component: ProductListComponent,
+  },
+  { path: ':id',
+    component: ProductDetailComponent,
+    resolve: { resolvedData: ProductResolver }
+  },
+  { path: ':id/edit',
+    component: ProductEditComponent,
+    canDeactivate: [ProductEditGuard],
+    resolve: { resolvedData: ProductResolver },
     children: [
       {
         path: '',
-        component: ProductListComponent,
+        redirectTo: 'info',
+        pathMatch: 'full'
       },
-      { path: ':id',
-        component: ProductDetailComponent,
-        resolve: { resolvedData: ProductResolver }
+      {
+        path: 'info',
+        component: ProductEditInfoComponent
       },
-      { path: ':id/edit',
-        component: ProductEditComponent,
-        canDeactivate: [ProductEditGuard],
-        resolve: { resolvedData: ProductResolver },
-        children: [
-          {
-            path: '',
-            redirectTo: 'info',
-            pathMatch: 'full'
-          },
-          {
-            path: 'info',
-            component: ProductEditInfoComponent
-          },
-          {
-            path: 'tags',
-            component: ProductEditTagsComponent
-          }
-        ]
-      },
+      {
+        path: 'tags',
+        component: ProductEditTagsComponent
+      }
     ]
-   },
+  },
 ];
 
 @NgModule({
